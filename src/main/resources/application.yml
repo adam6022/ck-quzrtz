@@ -1,0 +1,60 @@
+# 数据源配置
+spring:
+  profiles:
+    active: druid
+  mail:
+    protocol: smtp #smtp是邮件发送协议，pop3和imap是邮件接收协议。因为我们要发送邮件，因此是smtp
+    host: smtp.aliyun.com #邮件发送服务器的主机，这里采用的是QQ邮箱来发送邮件
+    #port: 25 #邮件发送服务器的端口
+    auth: true #一般情况下，发送邮件都是要进行验证
+    username: hzeckeylab@aliyun.com #邮件发送服务器的用户名
+    password: hzeckeylab@2018 #此处不是账户密码而是权限码(可以在邮箱中开启服务得到)
+    properties: #由于smtp属于变种协议,需要申明ssl
+      mail:
+        smtp:
+          ssl:
+            enable: true
+          starttls:
+            enable: true
+            required: true
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+            port: 465
+          auth: true
+
+server:
+  port: 8080
+
+# MyBatis
+mybatis:
+  # 搜索指定包别名
+  typeAliasesPackage: com.ck
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath*:mapper/**/*Mapper.xml
+  # 加载全局的配置文件
+  #configLocation: classpath:mapper/mybatis-config.xml
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+# 日志配置
+logging:
+   level:
+      com.ck: debug
+      org.springframework: WARN
+      org.spring.springboot.dao: debug
+
+ck:
+  quartz:
+    email:
+      url: hzeckeylab@aliyun.com
+      to: zhangyadong_eie@163.com
+      title: XuanWu  TimeTask Reporter
+      payload: test
+
+
+
+
+
+

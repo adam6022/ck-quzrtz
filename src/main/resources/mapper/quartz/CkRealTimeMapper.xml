@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ck.quartz.mapper.CkRealTimeMapper">
+
+    <resultMap type="GatherTime" id="CkRealTimeResult">
+        <result property="lastTime"  column="lastTime"       />
+    </resultMap>
+
+
+
+    <select id="getGatherTime" resultMap="CkRealTimeResult">
+       SELECT MAX(time) lastTime FROM powerperformance
+    </select>
+
+
+</mapper>
