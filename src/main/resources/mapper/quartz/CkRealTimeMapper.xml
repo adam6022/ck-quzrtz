@@ -14,5 +14,9 @@
        SELECT MAX(time) lastTime FROM powerperformance
     </select>
 
+    <select id="getNstrongTime" resultMap="CkRealTimeResult">
+       SELECT MAX(time) lastTime FROM performance
+    </select>
+
 
 </mapper>

@@ -36,7 +36,6 @@ public class ScheduleJob extends QuartzJobBean
     private final static ISysJobLogService jobLogService = SpringContextUtil.getBean(ISysJobLogService.class);
 
     public ScheduleJob(){
-        log.info("ScheduleJob init.....");
     }
 
 
@@ -45,7 +44,6 @@ public class ScheduleJob extends QuartzJobBean
     @Override
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException
     {
-        log.info("ScheduleJob executeInternal init.....");
         SysJob job = new SysJob();
         BeanUtils.copyBeanProp(job, context.getMergedJobDataMap().get(ScheduleConstants.TASK_PROPERTIES));
 

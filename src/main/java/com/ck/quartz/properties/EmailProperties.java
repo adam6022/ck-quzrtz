@@ -24,10 +24,9 @@ public class EmailProperties {
 
 
     public SimpleMailMessage mailMessage(SimpleMailMessage mailMessage){
-        //发送者
-        log.info("SEND_URL:{}",url);
-        mailMessage.setFrom(url);
 
+        //发送者
+        mailMessage.setFrom(url);
         //接收者
         mailMessage.setTo(to);
         //发送的标题

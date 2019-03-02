@@ -23,7 +23,7 @@ spring:
           auth: true
 
 server:
-  port: 8080
+  port: 8082
 
 # MyBatis
 mybatis:
@@ -50,8 +50,17 @@ ck:
     email:
       url: hzeckeylab@aliyun.com
       to: zhangyadong_eie@163.com
-      title: XuanWu  TimeTask Reporter
+      title: XuanWu TimeTask Reporter
       payload: test
+    dingtalk:
+      webhooktoken: https://oapi.dingtalk.com/robot/send?access_token=6c981f62ca8f88d90d7c0b9cf6c7cad3366a17f99339dde2f4cf7edeefec5400
+    #gt:
+      #serverurl: http://172.16.21.86
+      #api: api
+      #groupid: -1
+      #account: admin
+      #password: d033e22ae348aeb5660fc2140aec35850c4da997
+      #msghostUrl: http://172.16.1.129
 
 
 

@@ -1,9 +1,10 @@
 package com.ck.quartz.task;
 
+import com.ck.quartz.VO.JifangApiStatus;
 import com.ck.quartz.domain.GatherTime;
+import com.ck.quartz.enums.JiFangResultEnum;
 import com.ck.quartz.service.CkRealTimeService;
-import com.ck.quartz.service.ISysJobLogService;
-import com.ck.quartz.util.SpringContextUtil;
+import com.ck.quartz.service.DingTalkService;
 import com.ruoyi.common.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 
 
 /**
@@ -32,7 +32,9 @@ public class CkTask {
 
     @Autowired
     private CkRealTimeService ckRealTimeService;
-    //private final static CkRealTimeService ckRealTimeService = SpringContextUtil.getBean(CkRealTimeService.class);
+
+    @Autowired
+    private DingTalkService dingTalkService;
 
     /**
      * 有参方法任务
@@ -58,10 +60,56 @@ public class CkTask {
     public void getGatherTime() {
         log.info("GatherTime:{}");
         GatherTime gatherTime = ckRealTimeService.getGatherTime();
-        log.info("GatherTime:{}", gatherTime);
-        mailMessage.setText("玄武动环指标最新采集时间：" + DateUtils.parseDateToStr("yyyy-MM-dd HH:mm:ss", gatherTime.getLastTime()
-        )+"\n"+"当前告警数: 0 "+"\n"+ new Date());
+
+        GatherTime nstrongTime = ckRealTimeService.getNstrongTime();
+        log.info("nstrongTime:{}", nstrongTime);
+
+
+        JifangApiStatus status = null;
+        try {
+            status = ckRealTimeService.getGtApiStatus();
+        } catch (Exception e) {
+            log.error("【JiFang系统服务监控接口】连接失败，{}", e.getMessage());
+        }
+
+        StringBuffer sb = new StringBuffer();
+
+            sb.append("玄武动环最新指标采集时间：")
+                    .append(DateUtils.parseDateToStr("yyyy-MM-dd HH:mm:ss", gatherTime.getLastTime()))
+                    .append("\n")
+                    .append("玄武网管最新指标采集时间：")
+                    .append(DateUtils.parseDateToStr("yyyy-MM-dd HH:mm:ss", nstrongTime.getLastTime()))
+                    .append("\n");
+        if (status != null) {
+            sb.append("网管数据接口：")
+                    .append(JiFangResultEnum.getStatus(status.getNstrongDateStatus()))
+                    .append("\n")
+                    .append("动环数据接口：")
+                    .append(JiFangResultEnum.getStatus(status.getPowerDateStatus()))
+                    .append("\n")
+                    .append("短信告警接口：")
+                    .append(JiFangResultEnum.getStatus(status.getMessageDateStatus()))
+                    .append("\n")
+                    .append("动环采集轮数: ")
+                    .append(status.getIndexCount()).append("轮")
+                    .append("\n")
+                    .append("动环采集周期：")
+                    .append(status.getPeriodCount()).append("周期")
+                    .append("\n")
+                    .append("动环最新采集更新指标数：")
+                    .append(status.getRealtimeCount());
+        }else {
+            sb.append("\n\n【信息】JiFang系统服务监控接口通讯异常");
+        }
+
+
+
+
+        mailMessage.setText(sb.toString());
+        log.info("【发送邮件】,信息：{}", mailMessage);
         jms.send(mailMessage);
+        String textMsg = "{ \"msgtype\": \"text\", \"text\": {\"content\": \""+sb.toString()+"\"}}";
+        dingTalkService.send(textMsg);
     }
 
 }

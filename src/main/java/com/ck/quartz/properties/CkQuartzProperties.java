@@ -10,15 +10,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @create 2019-03-01 20:59
  */
 @ConfigurationProperties(prefix = "ck.quartz")
+@Data
 public class CkQuartzProperties {
 
     private EmailProperties email = new EmailProperties();
 
-    public EmailProperties getEmail() {
-        return email;
-    }
+    private Dingtalk dingtalk = new Dingtalk();
 
-    public void setEmail(EmailProperties email) {
-        this.email = email;
-    }
 }

@@ -15,4 +15,6 @@ public interface CkRealTimeMapper {
 
     public GatherTime getGatherTime();
 
+    public GatherTime getNstrongTime();
+
 }
