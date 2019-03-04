@@ -4,6 +4,7 @@ import com.ck.quartz.VO.JifangApiStatus;
 import com.ck.quartz.VO.JifangResult;
 import com.ck.quartz.domain.GatherTime;
 import com.ck.quartz.mapper.CkRealTimeMapper;
+import com.ck.quartz.properties.CkQuartzProperties;
 import com.ck.quartz.service.CkRealTimeService;
 import com.ruoyi.common.annotation.DataSource;
 import com.ruoyi.common.enums.DataSourceType;
@@ -26,6 +27,9 @@ public class CkRealTimeServiceImpl implements CkRealTimeService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private CkQuartzProperties ckQuartzProperties;
 
     /**
      * 获取最近一次采集时间
@@ -55,7 +59,8 @@ public class CkRealTimeServiceImpl implements CkRealTimeService {
      */
     @Override
     public JifangApiStatus getGtApiStatus() {
-        ResponseEntity<JifangResult> response = restTemplate.getForEntity("http://localhost:8080/monitorDataServiceStatus.do", JifangResult.class);
+        ResponseEntity<JifangResult> response = restTemplate.
+                getForEntity(ckQuartzProperties.getJifang().getMonitorApi(), JifangResult.class);
         JifangResult result = response.getBody();
         JifangApiStatus status = new JifangApiStatus();
 

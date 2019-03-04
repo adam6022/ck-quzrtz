@@ -1,15 +1,15 @@
-# Êı¾İÔ´ÅäÖÃ
+# æ•°æ®æºé…ç½®
 spring:
   profiles:
-    active: druid
+    active: druid-product
   mail:
-    protocol: smtp #smtpÊÇÓÊ¼ş·¢ËÍĞ­Òé£¬pop3ºÍimapÊÇÓÊ¼ş½ÓÊÕĞ­Òé¡£ÒòÎªÎÒÃÇÒª·¢ËÍÓÊ¼ş£¬Òò´ËÊÇsmtp
-    host: smtp.aliyun.com #ÓÊ¼ş·¢ËÍ·şÎñÆ÷µÄÖ÷»ú£¬ÕâÀï²ÉÓÃµÄÊÇQQÓÊÏäÀ´·¢ËÍÓÊ¼ş
-    #port: 25 #ÓÊ¼ş·¢ËÍ·şÎñÆ÷µÄ¶Ë¿Ú
-    auth: true #Ò»°ãÇé¿öÏÂ£¬·¢ËÍÓÊ¼ş¶¼ÊÇÒª½øĞĞÑéÖ¤
-    username: hzeckeylab@aliyun.com #ÓÊ¼ş·¢ËÍ·şÎñÆ÷µÄÓÃ»§Ãû
-    password: hzeckeylab@2018 #´Ë´¦²»ÊÇÕË»§ÃÜÂë¶øÊÇÈ¨ÏŞÂë(¿ÉÒÔÔÚÓÊÏäÖĞ¿ªÆô·şÎñµÃµ½)
-    properties: #ÓÉÓÚsmtpÊôÓÚ±äÖÖĞ­Òé,ĞèÒªÉêÃ÷ssl
+    protocol: smtp #smtpæ˜¯é‚®ä»¶å‘é€åè®®ï¼Œpop3å’Œimapæ˜¯é‚®ä»¶æ¥æ”¶åè®®ã€‚å› ä¸ºæˆ‘ä»¬è¦å‘é€é‚®ä»¶ï¼Œå› æ­¤æ˜¯smtp
+    host: smtp.aliyun.com #é‚®ä»¶å‘é€æœåŠ¡å™¨çš„ä¸»æœºï¼Œè¿™é‡Œé‡‡ç”¨çš„æ˜¯QQé‚®ç®±æ¥å‘é€é‚®ä»¶
+    #port: 25 #é‚®ä»¶å‘é€æœåŠ¡å™¨çš„ç«¯å£
+    auth: true #ä¸€èˆ¬æƒ…å†µä¸‹ï¼Œå‘é€é‚®ä»¶éƒ½æ˜¯è¦è¿›è¡ŒéªŒè¯
+    username: hzeckeylab@aliyun.com #é‚®ä»¶å‘é€æœåŠ¡å™¨çš„ç”¨æˆ·å
+    password: hzeckeylab@2018 #æ­¤å¤„ä¸æ˜¯è´¦æˆ·å¯†ç è€Œæ˜¯æƒé™ç (å¯ä»¥åœ¨é‚®ç®±ä¸­å¼€å¯æœåŠ¡å¾—åˆ°)
+    properties: #ç”±äºsmtpå±äºå˜ç§åè®®,éœ€è¦ç”³æ˜ssl
       mail:
         smtp:
           ssl:
@@ -27,18 +27,18 @@ server:
 
 # MyBatis
 mybatis:
-  # ËÑË÷Ö¸¶¨°ü±ğÃû
+  # æœç´¢æŒ‡å®šåŒ…åˆ«å
   typeAliasesPackage: com.ck
-  # ÅäÖÃmapperµÄÉ¨Ãè£¬ÕÒµ½ËùÓĞµÄmapper.xmlÓ³ÉäÎÄ¼ş
+  # é…ç½®mapperçš„æ‰«æï¼Œæ‰¾åˆ°æ‰€æœ‰çš„mapper.xmlæ˜ å°„æ–‡ä»¶
   mapperLocations: classpath*:mapper/**/*Mapper.xml
-  # ¼ÓÔØÈ«¾ÖµÄÅäÖÃÎÄ¼ş
+  # åŠ è½½å…¨å±€çš„é…ç½®æ–‡ä»¶
   #configLocation: classpath:mapper/mybatis-config.xml
 
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 
-# ÈÕÖ¾ÅäÖÃ
+# æ—¥å¿—é…ç½®
 logging:
    level:
       com.ck: debug
@@ -53,7 +53,10 @@ ck:
       title: XuanWu TimeTask Reporter
       payload: test
     dingtalk:
-      webhooktoken: https://oapi.dingtalk.com/robot/send?access_token=6c981f62ca8f88d90d7c0b9cf6c7cad3366a17f99339dde2f4cf7edeefec5400
+      webhooktoken: https://oapi.dingtalk.com/robot/send?access_token=1edcdae61e117cefd65b3cda610e8ac9d1c0fcd3c8169a5058959ba50ddb2ce9
+    jifang:
+      #æœºæˆ¿ç³»ç»Ÿç›‘æ§çŠ¶æ€æ¥å£åœ°å€
+      monitorApi: http://localhost:8080/monitorDataServiceStatus.do
     #gt:
       #serverurl: http://172.16.21.86
       #api: api

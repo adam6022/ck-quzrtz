@@ -7,6 +7,8 @@ package com.ck.quartz.VO;
  * @create 2019-03-02 09:51
  */
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +16,7 @@ import java.util.Map;
 /**
  * 返回结果
  */
+@Data
 public class JifangResult implements Serializable {
 
     /**
@@ -28,38 +31,7 @@ public class JifangResult implements Serializable {
     private Object data;
     /**自定义数据集合**/
     private Map<String, Object> map = new HashMap();
+    /**自定义分页**/
+    private Page page;
 
-
-
-    public Boolean getSuccess() {
-        return success;
-    }
-    public void setSuccess(Boolean success) {
-        this.success = success;
-    }
-    public String getMessage() {
-        return message;
-    }
-    public void setMessage(String message) {
-        this.message = message;
-    }
-    public Object getData() {
-        return data;
-    }
-    public void setData(Object data) {
-        this.data = data;
-    }
-
-    public Map<String, Object> getMap() {
-        return map;
-    }
-    public void setMap(Map<String, Object> map) {
-        this.map = map;
-    }
-    public void clear() {
-        this.success=false;
-        this.message=null;
-        this.data=null;
-        this.map=null;
-    }
 }

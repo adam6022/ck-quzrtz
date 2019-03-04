@@ -4,8 +4,6 @@ title auto commit
 echo 【+++++++++++++++++++++开始add+++++++++++++++++++++】
 git add -A
 echo 【+++++++++++++++++++++add完毕+++++++++++++++++++++】
-echo 【当前状态】：
-git status
 
 pause
 

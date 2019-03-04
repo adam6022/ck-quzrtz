@@ -17,4 +17,6 @@ public class CkQuartzProperties {
 
     private Dingtalk dingtalk = new Dingtalk();
 
+    private JifangProperties jifang = new JifangProperties();
+
 }

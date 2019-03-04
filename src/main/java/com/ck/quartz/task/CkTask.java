@@ -5,6 +5,11 @@ import com.ck.quartz.domain.GatherTime;
 import com.ck.quartz.enums.JiFangResultEnum;
 import com.ck.quartz.service.CkRealTimeService;
 import com.ck.quartz.service.DingTalkService;
+import com.dingtalk.chatbot.DingtalkChatbotClient;
+import com.dingtalk.chatbot.SendResult;
+import com.dingtalk.chatbot.message.ActionButtonStyle;
+import com.dingtalk.chatbot.message.ActionCardAction;
+import com.dingtalk.chatbot.message.ActionCardMessage;
 import com.ruoyi.common.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +17,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 
 
 /**
@@ -36,6 +42,8 @@ public class CkTask {
     @Autowired
     private DingTalkService dingTalkService;
 
+
+
     /**
      * 有参方法任务
      * @param params
@@ -57,7 +65,7 @@ public class CkTask {
     /**
      * 获取CK系统最近一次采集动环时间
      */
-    public void getGatherTime() {
+    public void getGatherTime() throws IOException {
         log.info("GatherTime:{}");
         GatherTime gatherTime = ckRealTimeService.getGatherTime();
 
@@ -105,11 +113,11 @@ public class CkTask {
 
 
 
+
         mailMessage.setText(sb.toString());
-        log.info("【发送邮件】,信息：{}", mailMessage);
-        jms.send(mailMessage);
-        String textMsg = "{ \"msgtype\": \"text\", \"text\": {\"content\": \""+sb.toString()+"\"}}";
-        dingTalkService.send(textMsg);
+        //log.info("【发送邮件】,信息：{}", mailMessage);
+        //jms.send(mailMessage);
+        dingTalkService.send(sb.toString());
     }
 
 }
