@@ -1,6 +1,7 @@
 package com.ck.quartz.task;
 
 import com.ck.quartz.VO.JifangApiStatus;
+import com.ck.quartz.VO.JifangResult;
 import com.ck.quartz.domain.GatherTime;
 import com.ck.quartz.enums.JiFangResultEnum;
 import com.ck.quartz.service.CkRealTimeService;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 
@@ -41,6 +43,7 @@ public class CkTask {
 
     @Autowired
     private DingTalkService dingTalkService;
+
 
 
 
@@ -119,5 +122,32 @@ public class CkTask {
         //jms.send(mailMessage);
         dingTalkService.send(sb.toString());
     }
+
+    public void monitorRunStatus() throws IOException {
+        log.info("开始监控运行状态");
+        JifangApiStatus status = null;
+        try {
+            status = ckRealTimeService.getGtApiStatus();
+        } catch (Exception e) {
+            log.error("【JiFang系统服务监控接口】连接失败，{}", e.getMessage());
+            dingTalkService.send("【JiFang系统服务监控接口】连接失败,请检查JiFang系统是否正常运行");
+        }
+        if (status.getPowerDateStatus().equals("false")){
+            dingTalkService.send("【动环数据采集】监测到数据接口未运行，正在尝试重新启动");
+            JifangResult jifangResult = ckRealTimeService.startPowerDataService();
+            log.info(jifangResult.getMessage());
+            log.info("【动环数据采集】等待运行结果");
+            try {
+                Thread.sleep(5*1000);
+                status = ckRealTimeService.getGtApiStatus();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (status.getPowerDateStatus().equals("true")){
+                dingTalkService.send("【动环数据采集】重新启动成功，服务运行中");
+            }
+        }
+    }
+
 
 }

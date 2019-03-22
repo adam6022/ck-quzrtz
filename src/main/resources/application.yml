@@ -23,7 +23,7 @@ spring:
           auth: true
 
 server:
-  port: 8082
+  port: 8083
 
 # MyBatis
 mybatis:
@@ -57,6 +57,7 @@ ck:
     jifang:
       #机房系统监控状态接口地址
       monitorApi: http://localhost:8080/monitorDataServiceStatus.do
+      powerDataStartApi: http://localhost:8080/power/start.do
     #gt:
       #serverurl: http://172.16.21.86
       #api: api

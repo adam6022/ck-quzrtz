@@ -73,4 +73,16 @@ public class CkRealTimeServiceImpl implements CkRealTimeService {
 
         return status;
     }
+
+    /**
+     * 启动运行动环接口
+     *
+     * @return
+     */
+    @Override
+    public JifangResult startPowerDataService() {
+        ResponseEntity<JifangResult> response = restTemplate.
+                getForEntity(ckQuartzProperties.getJifang().getPowerDataStartApi(), JifangResult.class);
+        return response.getBody();
+    }
 }

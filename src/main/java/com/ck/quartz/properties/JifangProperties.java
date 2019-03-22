@@ -13,4 +13,6 @@ public class JifangProperties {
 
     private String monitorApi;
 
+    private String powerDataStartApi;
+
 }

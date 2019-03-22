@@ -1,6 +1,7 @@
 package com.ck.quartz.service;
 
 import com.ck.quartz.VO.JifangApiStatus;
+import com.ck.quartz.VO.JifangResult;
 import com.ck.quartz.domain.GatherTime;
 
 
@@ -23,5 +24,11 @@ public interface CkRealTimeService {
      * @return
      */
     public JifangApiStatus getGtApiStatus();
+
+    /**
+     * 启动运行动环接口
+     * @return
+     */
+    public JifangResult startPowerDataService();
 
 }
